@@ -1,22 +1,36 @@
-Role Name
+ansible-role-pxe\_config
 =========
 
-A brief description of the role goes here.
+Configures PXE
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+a hosts file that looks like:
+
+<pre>
+
+[compute]
+node1 ip_address=10.1.2.1 mac_address=00:11:22:33:44:55 pxe=yes
+
+[pxe_bootable_nodes:children]
+compute
+
+</pre>
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+   * currently tightly integrated with dhcp\_server and pxe\_bootstrap
+
+      * https://github.com/CSC-IT-Center-for-Science/ansible-role-pxe\_bootstrapo
+      * https://github.com/CSC-IT-Center-for-Science/ansible-role-dhcp\_server
+
+
 
 Example Playbook
 ----------------
@@ -25,12 +39,12 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: ansible-role-pxe_config }
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
