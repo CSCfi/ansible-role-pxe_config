@@ -13,3 +13,6 @@
   when: hostvars[item].ip_address is defined
   with_items: groups['pxe_bootable_nodes']
 
+- name: copy over kickstart file
+  template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
+  with_items: groups['pxe_bootable_nodes']
