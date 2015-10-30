@@ -1,0 +1,18 @@
+---
+- name: create_dhcp_configs
+  template: src=dhcp_node.conf dest="/etc/dhcp/dhcpd.d/nodes.conf"
+  notify:
+    - restart dhcpd
+
+- name: create_pxe_boot_data
+  template: src=pxe_node.conf dest="/var/www/provision/nodes/{{ item }}.conf"
+  with_items: groups['pxe_bootable_nodes']
+
+- name: populate /etc/hosts file with PXE hosts
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ip_address }} {{item}}" state=present
+  when: hostvars[item].ip_address is defined
+  with_items: groups['pxe_bootable_nodes']
+
+- name: copy over kickstart file
+  template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
+  with_items: groups['pxe_bootable_nodes']
