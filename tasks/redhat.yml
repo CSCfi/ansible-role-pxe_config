@@ -5,7 +5,7 @@
     - restart dhcpd
 
 - name: create_pxe_boot_data
-  template: src=pxe_node.conf dest="/var/www/provision/nodes/{{ item }}.conf"
+  template: src=pxe_node.conf dest="/var/www/provision/nodes/{{ hostvars[item].pxe_name }}.conf"
   with_items: groups.pxe_bootable_nodes
 
 - name: populate /etc/hosts file with PXE hosts
