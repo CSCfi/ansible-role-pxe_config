@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-pxe_config.svg)](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-pxe_config)
 ansible-role-pxe\_config
 =========
 
@@ -21,6 +22,7 @@ compute
 Role Variables
 --------------
 
+generate_ssh_host_keys: True
 
 Dependencies
 ------------
