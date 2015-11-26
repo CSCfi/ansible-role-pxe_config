@@ -7,3 +7,5 @@
 # setting generate_ssh_host_keys to True generates sshd host keys
 generate_ssh_host_keys: True
 
+dhcp_common_domain: "fgci.csc.fi"
+dhcp_tftp_server_ip: "10.1.1.2"
