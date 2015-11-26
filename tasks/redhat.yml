@@ -1,8 +1,16 @@
 ---
+#TODO: Combine pxe_*, dhcp and dnsmasq roles
+- name: make sure dhcp dir exists
+  file: "path=/etc/dhcp/dhcpd.d state=directory"
+
+- name: install dhcp server
+  yum: pkg=dhcp state=installed
+
 - name: create_dhcp_configs
   template: src=dhcp_node.conf dest="/etc/dhcp/dhcpd.d/nodes.conf"
   notify:
     - restart dhcpd
+##
 
 - name: create_pxe_boot_data
   template: src=pxe_node.conf dest="/var/www/provision/nodes/{{ hostvars[item].pxe_name }}.conf"
