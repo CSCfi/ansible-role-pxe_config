@@ -3,3 +3,7 @@
 #
 ## setting yum_proxy adds a --proxy= to the url command in kickstart.cfg
 #yum_proxy: "http://10.1.1.4:3128"
+#
+# setting generate_ssh_host_keys to True generates sshd host keys
+generate_ssh_host_keys: True
+

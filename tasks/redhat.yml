@@ -16,3 +16,41 @@
 - name: copy over kickstart file
   template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
   with_items: groups.pxe_bootable_nodes
+
+- name: create SSH host key directory in /var/www/html
+  file: "path=/var/www/html/{{ item }}/ssh/ state=directory mode=0755 owner=apache group=apache"
+  with_items: groups.pxe_bootable_nodes
+  when: generate_ssh_host_keys
+
+- name: generate SSH RSA host keys for the nodes into /var/www/html
+  command: /usr/bin/ssh-keygen -t rsa -f /var/www/html/{{ item }}/ssh/ssh_host_rsa_key -N "" creates=/var/www/html/{{ item }}/ssh/ssh_host_rsa_key.pub
+  with_items: groups.pxe_bootable_nodes
+  when: generate_ssh_host_keys
+
+- name: generate SSH ecdsa host keys for the nodes into /var/www/html
+  command: /usr/bin/ssh-keygen -t ecdsa -f /var/www/html/{{ item }}/ssh/ssh_host_ecdsa_key -N "" creates=/var/www/html/{{ item }}/ssh/ssh_host_ecdsa_key.pub
+  with_items: groups.pxe_bootable_nodes
+  when: generate_ssh_host_keys
+
+- name: generate SSH ed25519 host keys for the nodes into /var/www/html
+  command: /usr/bin/ssh-keygen -t ed25519 -f /var/www/html/{{ item }}/ssh/ssh_host_ed25519_key -N "" creates=/var/www/html/{{ item }}/ssh/ssh_host_ed25519_key.pub
+  with_items: groups.pxe_bootable_nodes
+  when: generate_ssh_host_keys
+
+- name: write rsa pub keys into a known_hosts
+  known_hosts: path='/etc/ssh/ssh_known_hosts'
+               name='{{ item }}'
+               key="{{ lookup('file', '/var/www/html/{{ item }}/ssh/ssh_host_rsa_key.pub') }}"
+  with_items: groups.pxe_bootable_nodes
+
+- name: write ecdsa pub keys into a known_hosts
+  known_hosts: path='/etc/ssh/ssh_known_hosts'
+               name='{{ item }}'
+               key="{{ lookup('file', '/var/www/html/{{ item }}/ssh/ssh_host_ecdsa_key.pub') }}"
+  with_items: groups.pxe_bootable_nodes
+
+- name: write ed25519 pub keys into a known_hosts
+  known_hosts: path='/etc/ssh/ssh_known_hosts'
+               name='{{ item }}'
+               key="{{ lookup('file', '/var/www/html/{{ item }}/ssh/ssh_host_ed25519_key.pub') }}"
+  with_items: groups.pxe_bootable_nodes
