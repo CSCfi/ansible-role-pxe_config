@@ -1,0 +1,51 @@
+---
+
+#Remote
+- name: create SSH host key directory in /var/www/html
+  file: "path=/var/www/html/{{ item }}/ssh/ state=directory mode=0755 owner=apache group=apache"
+  with_items: groups.pxe_bootable_nodes
+  when: generate_ssh_host_keys
+
+#Generate SSH keys locally where you run ansible - then copy the files to install node.
+- name: create SSH host key directory in files/nodes
+  file: "path=files/nodes state=directory"
+  delegate_to: localhost
+
+- name: generate SSH RSA host keys for the nodes into /var/www/html
+  command: /usr/bin/ssh-keygen -t rsa -f files/nodes/{{ item }}/ssh/ssh_host_rsa_key -N "" creates=files/nodes/{{ item }}/ssh/ssh_host_rsa_key.pub
+  with_items: groups.pxe_bootable_nodes
+  when: generate_ssh_host_keys
+  delegate_to: localhost
+
+- name: generate SSH ecdsa host keys for the nodes into files/nodes/
+  command: /usr/bin/ssh-keygen -t ecdsa -f files/nodes/{{ item }}/ssh/ssh_host_ecdsa_key -N "" creates=files/nodes/{{ item }}/ssh/ssh_host_ecdsa_key.pub
+  with_items: groups.pxe_bootable_nodes
+  when: generate_ssh_host_keys
+  delegate_to: localhost
+
+- name: generate SSH ed25519 host keys for the nodes into /var/www/html
+  command: /usr/bin/ssh-keygen -t ed25519 -f files/nodes/{{ item }}/ssh/ssh_host_ed25519_key -N "" creates=files/nodes/{{ item }}/ssh/ssh_host_ed25519_key.pub
+  with_items: groups.pxe_bootable_nodes
+  when: generate_ssh_host_keys
+  delegate_to: localhost
+
+- name: write rsa pub keys into a known_hosts
+  known_hosts: path='files/nodes/ssh_known_hosts'
+               name='{{ item }}'
+               key="{{ lookup('file', 'files/nodes/{{ item }}/ssh/ssh_host_rsa_key.pub') }}"
+  with_items: groups.pxe_bootable_nodes
+  delegate_to: localhost
+
+- name: write ecdsa pub keys into a known_hosts
+  known_hosts: path='files/nodes/ssh_known_hosts'
+               name='{{ item }}'
+               key="{{ lookup('file', 'files/nodes/{{ item }}/ssh/ssh_host_ecdsa_key.pub') }}"
+  with_items: groups.pxe_bootable_nodes
+  delegate_to: localhost
+
+- name: write ed25519 pub keys into a known_hosts
+  known_hosts: path='files/nodes/ssh_known_hosts'
+               name='{{ item }}'
+               key="{{ lookup('file', 'files/nodes/{{ item }}/ssh/ssh_host_ed25519_key.pub') }}"
+  with_items: groups.pxe_bootable_nodes
+  delegate_to: localhost
