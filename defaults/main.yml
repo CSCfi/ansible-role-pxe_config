@@ -11,9 +11,9 @@ dhcp_common_domain: "fgci.csc.fi"
 dhcp_tftp_server_ip: "10.1.1.2"
 
 ssh_host_key_files:
- - ssh_rsa_rsa_key
- - ssh_ecdsa_key
- - ssh_ed25519_key
+ - ssh_host_rsa_key
+ - ssh_host_ecdsa_key
+ - ssh_host_ed25519_key
 
 ssh_known_host_files:
  - ssh_rsa_known_hosts
