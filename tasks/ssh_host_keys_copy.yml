@@ -1,0 +1,31 @@
+---
+
+#Remote
+- name: create SSH host key directory in /var/www/html
+  file: "path=/var/www/html/{{ item }}/ssh/ state=directory mode=0755 owner=apache group=apache"
+  with_items: groups.pxe_bootable_nodes
+
+- name: create SSH known_hosts directory in /var/www/html
+  file: "path=/var/www/html/known_hosts state=directory mode=0755 owner=apache group=apache"
+
+##
+
+- name: copy the known_hosts files to the install node /etc/ssh/
+  copy: src=files/nodes/{{ item }} dest=/etc/ssh/{{ item }} owner=root group=root mode=0644 backup=yes
+  with_items: ssh_known_host_files
+
+- name: copy the known_hosts files to the install node /var/www
+  copy: src=files/nodes/{{ item }} dest=/var/www/html/known_hosts/{{ item }} owner=apache group=apache mode=0644 backup=yes
+  with_items: ssh_known_host_files
+
+- name: copy the host keys to the install node /var/www
+  copy: src=files/nodes/{{ item[0] }}/ssh/{{ item[1] }} dest=/var/www/html/{{ item[0] }}/ssh/{{ item[1] }} owner=apache group=apache mode=0644 backup=yes
+  with_nested: 
+   - groups.pxe_bootable_nodes
+   - ssh_known_host_files
+
+- name: copy the host pub keys to the install node /var/www
+  copy: src=files/nodes/{{ item[0] }}/ssh/{{ item[1] }}.pub dest=/var/www/html/{{ item[0] }}/ssh/{{ item[1] }}.pub owner=apache group=apache mode=0644 backup=yes
+  with_nested: 
+   - groups.pxe_bootable_nodes
+   - ssh_known_host_files

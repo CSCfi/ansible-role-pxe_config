@@ -9,3 +9,9 @@ generate_ssh_host_keys: True
 
 dhcp_common_domain: "fgci.csc.fi"
 dhcp_tftp_server_ip: "10.1.1.2"
+
+ssh_known_host_files:
+ - ssh_rsa_known_hosts
+ - ssh_ecdsa_known_hosts
+ - ssh_ed25519_known_hosts
+ 
