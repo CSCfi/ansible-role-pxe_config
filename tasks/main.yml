@@ -2,3 +2,5 @@
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
 - include: ssh_host_keys.yml
+  tags: ssh_host_keys
+  sudo: False

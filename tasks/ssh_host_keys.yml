@@ -5,7 +5,9 @@
   file: "path=/var/www/html/{{ item }}/ssh/ state=directory mode=0755 owner=apache group=apache"
   with_items: groups.pxe_bootable_nodes
   when: generate_ssh_host_keys
+  sudo: True
 
+#Local
 #Generate SSH keys locally where you run ansible - then copy the files to install node.
 - name: create SSH host key directory in files/nodes
   file: "path=files/nodes state=directory"
