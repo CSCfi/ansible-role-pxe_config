@@ -5,7 +5,6 @@
   tags: ssh_host_keys
   sudo: False
   when: generate_ssh_host_keys
-  delegate_to: localhost
 - include: ssh_host_keys_copy.yml
   tags: ssh_host_keys
   sudo: True
