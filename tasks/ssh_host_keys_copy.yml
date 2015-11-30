@@ -22,10 +22,10 @@
   copy: src=files/nodes/{{ item[0] }}/ssh/{{ item[1] }} dest=/var/www/html/{{ item[0] }}/ssh/{{ item[1] }} owner=apache group=apache mode=0644 backup=yes
   with_nested: 
    - groups.pxe_bootable_nodes
-   - ssh_known_host_files
+   - ssh_host_key_files
 
 - name: copy the host pub keys to the install node /var/www
   copy: src=files/nodes/{{ item[0] }}/ssh/{{ item[1] }}.pub dest=/var/www/html/{{ item[0] }}/ssh/{{ item[1] }}.pub owner=apache group=apache mode=0644 backup=yes
   with_nested: 
    - groups.pxe_bootable_nodes
-   - ssh_known_host_files
+   - ssh_host_key_files
