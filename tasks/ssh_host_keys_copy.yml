@@ -2,7 +2,7 @@
 
 #Remote
 - name: create SSH host key directory in /home/ - assumes a shared /home directory
-  file: "path={{ ssh_host_keys_dir }}/{{ item }}/ssh/ state=directory mode=0750 owner=root group=admin recurse=yes"
+  file: "path={{ ssh_host_keys_dir }}/{{ item }}/ssh/ state=directory mode=0750 owner=root group=admin"
   with_items: groups.pxe_bootable_nodes
 
 - name: create SSH known_hosts directory in /var/www/html
