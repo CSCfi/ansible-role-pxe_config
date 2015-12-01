@@ -11,6 +11,9 @@
   notify:
     - restart dhcpd
 ##
+# This task is also in pxe_bootstrap
+- name: create_pxe_directory_structure
+  file: path=/var/www/provision/nodes state=directory owner=apache group=apache mode="0755"
 
 - name: create_pxe_boot_data
   template: src=pxe_node.conf dest="/var/www/provision/nodes/{{ hostvars[item].pxe_name }}.conf"
