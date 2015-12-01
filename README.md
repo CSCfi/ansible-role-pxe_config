@@ -24,6 +24,8 @@ Role Variables
 
 generate_ssh_host_keys: True
 
+See defaults/main.yml for some examples
+
 Dependencies
 ------------
 
