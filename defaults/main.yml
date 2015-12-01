@@ -20,3 +20,5 @@ ssh_known_host_files:
  - ssh_ecdsa_known_hosts
  - ssh_ed25519_known_hosts
  
+ssh_host_keys_dir: "/home/admin/nodes"
+ssh_known_hosts_dir: "/var/www/html/known_hosts"
