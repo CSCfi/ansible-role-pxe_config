@@ -19,13 +19,13 @@
   with_items: ssh_known_host_files
 
 - name: copy the host keys to the install node ssh_host_keys_location
-  copy: src=files/nodes/{{ item[0] }}/ssh/{{ item[1] }} dest={{ ssh_host_keys_dir }}/{{ item[0] }}/ssh/{{ item[1] }} owner=apache group=apache mode=0644 backup=yes
+  copy: src=files/nodes/{{ item[0] }}/ssh/{{ item[1] }} dest={{ ssh_host_keys_dir }}/{{ item[0] }}/ssh/{{ item[1] }} owner=root group=admin mode=0640 backup=yes
   with_nested: 
    - groups.pxe_bootable_nodes
    - ssh_host_key_files
 
 - name: copy the host pub keys to the install node ssh_known_hosts_location
-  copy: src=files/nodes/{{ item[0] }}/ssh/{{ item[1] }}.pub dest={{ ssh_host_keys_dir }}/{{ item[0] }}/ssh/{{ item[1] }}.pub owner=apache group=apache mode=0644 backup=yes
+  copy: src=files/nodes/{{ item[0] }}/ssh/{{ item[1] }}.pub dest={{ ssh_host_keys_dir }}/{{ item[0] }}/ssh/{{ item[1] }}.pub owner=root group=admin mode=0640 backup=yes
   with_nested: 
    - groups.pxe_bootable_nodes
    - ssh_host_key_files
