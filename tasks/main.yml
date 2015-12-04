@@ -5,6 +5,10 @@
   tags: ssh_host_keys
   sudo: False
   when: generate_ssh_host_keys
+- include: ssh_known_hosts.yml
+  tags: ssh_known_hosts
+  sudo: False
+  when: generate_ssh_known_hosts
 - include: ssh_host_keys_copy.yml
   tags: ssh_host_keys
   sudo: True
