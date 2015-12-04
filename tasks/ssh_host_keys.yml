@@ -25,20 +25,20 @@
 - name: write rsa pub keys into a known_hosts
   known_hosts: path='files/nodes/ssh_rsa_known_hosts'
                name='{{ item }}'
-               key="{{ item }},{{ ip_address }},{{ ib_ip_addr }} {{ lookup('file', 'files/nodes/' + item + '/ssh/ssh_host_rsa_key.pub') }}"
+               key="{{ item }},{{ hostvars[item].ip_address }},{{ hostvars[item].ib_ip_addr }} {{ lookup('file', 'files/nodes/' + item + '/ssh/ssh_host_rsa_key.pub') }}"
   delegate_to: localhost
   with_items: groups.pxe_bootable_nodes
 
 - name: write ecdsa pub keys into a known_hosts
   known_hosts: path='files/nodes/ssh_ecdsa_known_hosts'
                name='{{ item }}'
-               key="{{ item }},{{ ip_address }},{{ ib_ip_addr }} {{ lookup('file', 'files/nodes/' + item + '/ssh/ssh_host_ecdsa_key.pub') }}"
+               key="{{ item }},{{ hostvars[item].ip_address }},{{ hostvars[item].ib_ip_addr }} {{ lookup('file', 'files/nodes/' + item + '/ssh/ssh_host_ecdsa_key.pub') }}"
   delegate_to: localhost
   with_items: groups.pxe_bootable_nodes
 
 - name: write ed25519 pub keys into a known_hosts
   known_hosts: path='files/nodes/ssh_ed25519_known_hosts'
                name='{{ item }}'
-               key="{{ item }},{{ ip_address }},{{ ib_ip_addr }} {{ lookup('file', 'files/nodes/' + item + '/ssh/ssh_host_ed25519_key.pub') }}"
+               key="{{ item }},{{ hostvars[item].ip_address }},{{ hostvars[item].ib_ip_addr }} {{ lookup('file', 'files/nodes/' + item + '/ssh/ssh_host_ed25519_key.pub') }}"
   delegate_to: localhost
   with_items: groups.pxe_bootable_nodes
