@@ -23,24 +23,32 @@
   lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ip_address }} {{ hostvars[item].pxe_name }} {{item}}" state=present
   when: hostvars[item].ip_address is defined
   with_items: groups.pxe_bootable_nodes
+  notify:
+    - restart dnsmasq
   tags: dns_update
 
 - name: populate /etc/hosts file with PXE hosts.local
   lineinfile: dest=/etc/hosts regexp='.*{{ item }}.local$' line="{{ hostvars[item].ip_address }} {{ hostvars[item].pxe_name }}.local {{item}}.local" state=present
   when: hostvars[item].ip_address is defined
   with_items: groups.pxe_bootable_nodes
+  notify:
+    - restart dnsmasq
   tags: dns_update
 
 - name: populate /etc/hosts file with PXE hosts-ib IP addresses
   lineinfile: dest=/etc/hosts regexp='.*{{ item }}-ib$' line="{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{item}}-ib" state=present
   when: hostvars[item].ib_ip_addr is defined
   with_items: groups.pxe_bootable_nodes
+  notify:
+    - restart dnsmasq
   tags: dns_update
 
 - name: populate /etc/hosts file with the admin host's internal address
   lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}}" state=present
   when: hostvars[item].int_ip_addr is defined
   with_items: groups.admin
+  notify:
+    - restart dnsmasq
   tags: dns_update
 
 - name: copy over kickstart file
