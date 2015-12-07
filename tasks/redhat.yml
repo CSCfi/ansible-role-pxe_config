@@ -26,7 +26,7 @@
   tags: dns_update
 
 - name: populate /etc/hosts file with PXE hosts-ib IP addresses
-  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{item}}-ib" state=present
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}-ib$' line="{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{item}}-ib" state=present
   when: hostvars[item].ib_ip_addr is defined
   with_items: groups.pxe_bootable_nodes
   tags: dns_update
