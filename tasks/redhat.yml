@@ -51,6 +51,13 @@
     - restart dnsmasq
   tags: dns_update
 
+- name: populate /etc/hosts file with the grid host's internal address
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}}" state=present
+  when: hostvars[item].int_ip_addr is defined
+  with_items: groups.grid
+  notify:
+    - restart dnsmasq
+
 - name: copy over kickstart file
   template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
   with_items: groups.pxe_bootable_nodes
