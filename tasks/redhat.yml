@@ -6,6 +6,12 @@
 - name: install dhcp server
   yum: pkg=dhcp state=installed
 
+##
+# Installing httpd is also in pxe_bootstrap
+# Here to make this role independent so it can be tested
+- name: install httpd server
+  yum: pkg=httpd state=installed
+
 - name: create_dhcp_configs
   template: src=dhcp_node.conf dest="/etc/dhcp/dhcpd.d/nodes.conf"
   notify:
