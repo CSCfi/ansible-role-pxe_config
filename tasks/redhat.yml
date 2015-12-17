@@ -57,6 +57,7 @@
   with_items: groups.grid
   notify:
     - restart dnsmasq
+  tags: dns_update
 
 - name: copy over kickstart file
   template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
