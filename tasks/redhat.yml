@@ -33,8 +33,8 @@
     - restart dnsmasq
   tags: dns_update
 
-- name: populate /etc/hosts file with PXE hosts.local
-  lineinfile: dest=/etc/hosts regexp='.*{{ item }}.local$' line="{{ hostvars[item].ip_address }} {{ hostvars[item].pxe_name }}.local {{item}}.local" state=present
+- name: populate /etc/hosts file with PXE hosts.int.siteDomain
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}.int.{{ siteDomain }}$' line="{{ hostvars[item].ip_address }} {{ hostvars[item].pxe_name }}.int {{item}}.int.{{ siteDomain }}" state=present
   when: hostvars[item].ip_address is defined
   with_items: groups.pxe_bootable_nodes
   notify:
