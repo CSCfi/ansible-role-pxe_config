@@ -26,15 +26,7 @@
   with_items: groups.pxe_bootable_nodes
 
 - name: populate /etc/hosts file with PXE hosts
-  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ip_address }} {{ hostvars[item].pxe_name }} {{item}}" state=present
-  when: hostvars[item].ip_address is defined
-  with_items: groups.pxe_bootable_nodes
-  notify:
-    - restart dnsmasq
-  tags: dns_update
-
-- name: populate /etc/hosts file with PXE hosts.int.siteDomain
-  lineinfile: dest=/etc/hosts regexp='.*{{ item }}.{{ intDomain }}.{{ siteDomain }}$' line="{{ hostvars[item].ip_address }} {{item}}.{{ intDomain }}.{{ siteDomain }}" state=present
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ip_address }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}" state=present
   when: hostvars[item].ip_address is defined
   with_items: groups.pxe_bootable_nodes
   notify:
@@ -42,7 +34,7 @@
   tags: dns_update
 
 - name: populate /etc/hosts file with PXE hosts-ib IP addresses
-  lineinfile: dest=/etc/hosts regexp='.*{{ item }}-ib.{{ intDomain }}.{{ siteDomain }}$' line="{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{item}}-ib.{{ intDomain }}.{{ siteDomain }}" state=present
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}-ib.{{ intDomain }}.{{ siteDomain }}$' line="{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{ hostvars[item].pxe_name }}-ib.{{ intDomain }}.{{ siteDomain }}" state=present
   when: hostvars[item].ib_ip_addr is defined
   with_items: groups.pxe_bootable_nodes
   notify:
