@@ -52,8 +52,8 @@
 - name: populate /etc/hosts file with the admin host's internal address
   lineinfile: 
         dest=/etc/hosts 
-        regexp='.*{{ item }}$' 
-        line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}}" 
+        regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }}$' 
+        line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }}" 
         state=present
   when: hostvars[item].int_ip_addr is defined
   with_items: groups.admin
@@ -62,7 +62,11 @@
   tags: dns_update
 
 - name: populate /etc/hosts file with the grid host's internal address
-  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}}" state=present
+  lineinfile: 
+        dest=/etc/hosts 
+        regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }}$' 
+        line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }}" 
+        state=present
   when: hostvars[item].int_ip_addr is defined
   with_items: groups.grid
   notify:
