@@ -12,7 +12,7 @@ a hosts file that looks like:
 <pre>
 
 [compute]
-node1 ip_address=10.1.2.1 mac_address=00:11:22:33:44:55 pxe=yes
+node1 int_ip_addr=10.1.2.1 mac_address=00:11:22:33:44:55 pxe=yes
 
 [pxe_bootable_nodes:children]
 compute

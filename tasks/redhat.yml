@@ -28,10 +28,10 @@
 - name: populate /etc/hosts file with PXE hosts
   lineinfile: 
         dest=/etc/hosts 
-        regexp='^{{ hostvars[item].ip_address }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}$' 
-        line="{{ hostvars[item].ip_address }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}" 
+        regexp='^{{ hostvars[item].int_ip_addr }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}$' 
+        line="{{ hostvars[item].int_ip_addr }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}" 
         state=present
-  when: hostvars[item].ip_address is defined
+  when: hostvars[item].int_ip_addr is defined
   with_items: groups.pxe_bootable_nodes
   notify:
     - restart dnsmasq
