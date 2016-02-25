@@ -5,9 +5,9 @@
 #yum_proxy: "http://10.1.1.4:3128"
 #
 # A VNC server is running on the system being kickstarted so one can
-# troubleshoot problems. If "vnc_password" is set, this is used as the
-# password needed when connecting to the VNC server, otherwise no
-# password is needed.
+# troubleshoot problems. If "vnc_password" is set and is between 6 and
+# 8 characters long, this is used as the password needed when
+# connecting to the VNC server, otherwise no password is needed.
 
 # ansible-pull at the end of the kickstart is disabled by default, set it to true in the group_vars
 ansible_pull_kickstart: false
