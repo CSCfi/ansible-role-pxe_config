@@ -8,9 +8,12 @@
 
 ##
 # Installing httpd is also in pxe_bootstrap
-# Here to make this role independent so it can be tested
+# Installing dnsmasq is also in ansible-role-dnsmasq
+# Here to make this role independent.
 - name: install httpd server
   yum: pkg=httpd state=installed
+- name: install dnsmasq server
+  yum: pkg=dnsmasq state=installed
 
 - name: create_dhcp_configs
   template: src=dhcp_node.conf dest="/etc/dhcp/dhcpd.d/nodes.conf"
@@ -25,9 +28,9 @@
   template: src=pxe_node.conf dest="/var/www/provision/nodes/{{ hostvars[item].pxe_name }}.conf"
   with_items: groups.pxe_bootable_nodes
 
-- name: populate /etc/hosts file with PXE hosts
+- name: populate hosts file with PXE hosts
   lineinfile: 
-        dest=/etc/hosts 
+        dest='{{ hosts_file_to_populate }}'
         regexp='^{{ hostvars[item].int_ip_addr }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}$' 
         line="{{ hostvars[item].int_ip_addr }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}" 
         state=present
@@ -37,9 +40,9 @@
     - restart dnsmasq
   tags: dns_update
 
-- name: populate /etc/hosts file with PXE hosts-ib IP addresses
+- name: populate hosts file with PXE hosts-ib IP addresses
   lineinfile: 
-        dest=/etc/hosts 
+        dest='{{ hosts_file_to_populate }}'
         regexp='^{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{ hostvars[item].pxe_name }}-ib.{{ intDomain }}.{{ siteDomain }}$' 
         line="{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{ hostvars[item].pxe_name }}-ib.{{ intDomain }}.{{ siteDomain }}" 
         state=present
@@ -49,9 +52,9 @@
     - restart dnsmasq
   tags: dns_update
 
-- name: populate /etc/hosts file with the admin host's internal address
+- name: populate hosts file with the admin host's internal address
   lineinfile: 
-        dest=/etc/hosts 
+        dest='{{ hosts_file_to_populate }}'
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }}$' 
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }}" 
         state=present
@@ -61,9 +64,9 @@
     - restart dnsmasq
   tags: dns_update
 
-- name: populate /etc/hosts file with the grid host's internal address
+- name: populate hosts file with the grid host's internal address
   lineinfile: 
-        dest=/etc/hosts 
+        dest='{{ hosts_file_to_populate }}'
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }}$' 
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }}" 
         state=present
