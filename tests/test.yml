@@ -5,7 +5,8 @@
    roles:
      - ansible-role-pxe_config
    vars:
-     - siteDomain: "fgci"
+     - siteDomain: "fgci.csc.fi"
+     - siteName: "io"
      - hosts_file_to_populate: "/tmp/hosts"
    pre_tasks:
    - name: touch hosts_file_to_populate
