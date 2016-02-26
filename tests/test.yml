@@ -2,7 +2,5 @@
 
  - hosts: localhost
    remote_user: root
-   vars:
-     - nis_server: True
    roles:
      - ansible-role-pxe_config

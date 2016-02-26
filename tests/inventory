@@ -14,8 +14,7 @@ localhost
 localhost
 
 [compute]
-localhost int_ip_addr=10.1.100.1 mac_address=00:11:22:33:44:55 pxe=yes pxe_name=io1
-localhost int_ip_addr=10.1.100.2 mac_address=00:11:22:33:44:56 pxe=yes pxe_name=io2
+localhost ip_address=10.1.100.1 mac_address=00:11:22:33:44:55 pxe=yes
 
 [pxe_bootable_nodes:children]
 compute
