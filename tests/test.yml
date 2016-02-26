@@ -7,3 +7,7 @@
    vars:
      - siteDomain: "fgci"
      - hosts_file_to_populate: "/tmp/hosts"
+   pre_tasks:
+   - name: touch hosts_file_to_populate
+     file: path="{{ hosts_file_to_populate }}" state=touch
+ 
