@@ -6,3 +6,4 @@
      - ansible-role-pxe_config
    vars:
      - siteDomain: "fgci"
+     - hosts_file_to_populate: "/tmp/hosts"
