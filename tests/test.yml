@@ -8,6 +8,9 @@
      - siteDomain: "fgci.csc.fi"
      - siteName: "io"
      - hosts_file_to_populate: "/tmp/hosts"
+     - ksBootSrvDir: "/tmp"
+     - location: "http://www.nic.funet.fi/pub/mirrors/centos.org/7/os/x86_64/"
+     - rootpwhash: "SHAFOOO"
    pre_tasks:
    - name: touch hosts_file_to_populate
      file: path="{{ hosts_file_to_populate }}" state=touch
