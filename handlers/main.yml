@@ -1,6 +1,8 @@
 ---
 - name: restart dhcpd
   service: name=dhcpd state=restarted
+  when: ansible_virtualization_type != "docker"
 
 - name: restart dnsmasq
   service: name=dnsmasq state=restarted
+  when: ansible_virtualization_type != "docker"
