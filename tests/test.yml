@@ -4,3 +4,5 @@
    remote_user: root
    roles:
      - ansible-role-pxe_config
+   vars:
+     - siteDomain: "fgci"
