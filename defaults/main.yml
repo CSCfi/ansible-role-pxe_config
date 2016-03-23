@@ -32,3 +32,6 @@ kickstart_partitions: |
 kickstart_packages: |
   ansible
   git
+
+kickstart_extra_post_commands: |
+  "echo no extra commands defined"
