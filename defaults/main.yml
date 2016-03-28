@@ -32,3 +32,11 @@ kickstart_partitions: |
 kickstart_packages: |
   ansible
   git
+
+# define these _pre_ variables to run commands before the kickstart installation begins
+#kickstart_pre_option: "%pre --interpreter=/usr/bin/python --log=/mnt/sysimage/root/ks-pre.log"
+#kickstart_extra_pre_commands: |
+# 'print("no extra kickstart pre commands defined")'
+
+kickstart_extra_post_commands: |
+ "echo no extra kickstart post commands defined"
