@@ -26,7 +26,7 @@
 
 - name: create_pxe_boot_data
   template: src=pxe_node.conf dest="/var/www/provision/nodes/{{ hostvars[item].pxe_name }}.conf"
-  with_items: groups.pxe_bootable_nodes
+  with_items: "{{ groups.pxe_bootable_nodes }}"
 
 - name: populate hosts file with PXE hosts
   lineinfile: 
@@ -35,7 +35,7 @@
         line="{{ hostvars[item].int_ip_addr }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}" 
         state=present
   when: hostvars[item].int_ip_addr is defined
-  with_items: groups.pxe_bootable_nodes
+  with_items: "{{ groups.pxe_bootable_nodes }}"
   notify:
     - restart dnsmasq
   tags: dns_update
@@ -47,7 +47,7 @@
         line="{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{ hostvars[item].pxe_name }}-ib.{{ intDomain }}.{{ siteDomain }}" 
         state=present
   when: hostvars[item].ib_ip_addr is defined
-  with_items: groups.pxe_bootable_nodes
+  with_items: "{{ groups.pxe_bootable_nodes }}"
   notify:
     - restart dnsmasq
   tags: dns_update
@@ -59,7 +59,7 @@
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }}" 
         state=present
   when: hostvars[item].int_ip_addr is defined
-  with_items: groups.admin
+  with_items: "{{ groups.admin }}"
   notify:
     - restart dnsmasq
   tags: dns_update
@@ -71,7 +71,7 @@
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }}" 
         state=present
   when: hostvars[item].int_ip_addr is defined
-  with_items: groups.grid
+  with_items: "{{ groups.grid }}"
   notify:
     - restart dnsmasq
   tags: dns_update
@@ -83,7 +83,7 @@
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-install {{item}} {{ siteName }}-install.{{ intDomain }}.{{ siteDomain }}" 
         state=present
   when: hostvars[item].int_ip_addr is defined
-  with_items: groups.install
+  with_items: "{{ groups.install }}"
   notify:
     - restart dnsmasq
   tags: dns_update
@@ -95,11 +95,11 @@
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }} {{item}} {{ siteName }}.{{ intDomain }}.{{ siteDomain }}" 
         state=present
   when: hostvars[item].int_ip_addr is defined
-  with_items: groups.login
+  with_items: "{{ groups.login }}"
   notify:
     - restart dnsmasq
   tags: dns_update
 
 - name: copy over kickstart file
   template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
-  with_items: groups.pxe_bootable_nodes
+  with_items: "{{ groups.pxe_bootable_nodes }}"
