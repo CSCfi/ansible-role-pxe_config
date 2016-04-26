@@ -119,8 +119,8 @@ function test_playbook(){
 }
 function extra_tests(){
 
-    echo "TEST: cat the resulting /etc/hosts"
-    cat /etc/hosts
+    echo "TEST: cat the resulting /tmp/hosts (/tmp/hosts because we write to that file in the test)"
+    cat /tmp/hosts
 }
 
 
