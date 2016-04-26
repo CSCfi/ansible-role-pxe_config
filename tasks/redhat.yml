@@ -94,7 +94,7 @@
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }} {{item}} {{ siteName }}.{{ intDomain }}.{{ siteDomain }}$' 
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }} {{item}} {{ siteName }}.{{ intDomain }}.{{ siteDomain }}" 
         state=present
-  when: hostvars[item].int_ip_addr is defined and hosts_file_login_group_to_populate is defined
+  when: hostvars[item].int_ip_addr is defined and hosts_file_login_group_to_populate != ""
   with_items: "{{ hosts_file_login_group_to_populate }}"
   notify:
     - restart dnsmasq

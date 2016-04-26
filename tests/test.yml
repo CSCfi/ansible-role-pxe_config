@@ -11,6 +11,7 @@
      - ksBootSrvDir: "/tmp"
      - location: "http://www.nic.funet.fi/pub/mirrors/centos.org/7/os/x86_64/"
      - rootpwhash: "SHAFOOO"
+     - hosts_file_login_group_to_populate: ""
    pre_tasks:
    - name: touch hosts_file_to_populate
      file: path="{{ hosts_file_to_populate }}" state=touch
