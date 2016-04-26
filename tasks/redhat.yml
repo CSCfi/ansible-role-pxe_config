@@ -46,7 +46,7 @@
         regexp='^{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{ hostvars[item].pxe_name }}-ib.{{ intDomain }}.{{ siteDomain }}$' 
         line="{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{ hostvars[item].pxe_name }}-ib.{{ intDomain }}.{{ siteDomain }}" 
         state=present
-  when: hostvars[item].ib_ip_addr is defined and hosts_file_pxe_group_to_populate is defined
+  when: hostvars[item].ib_ip_addr is defined and hosts_file_pxe_group_to_populate != ""
   with_items: "{{ hosts_file_pxe_group_to_populate }}"
   notify:
     - restart dnsmasq
@@ -58,7 +58,7 @@
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }}$' 
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }}" 
         state=present
-  when: hostvars[item].int_ip_addr is defined and hosts_file_admin_group_to_populate is defined
+  when: hostvars[item].int_ip_addr is defined and hosts_file_admin_group_to_populate != ""
   with_items: "{{ hosts_file_admin_group_to_populate }}"
   notify:
     - restart dnsmasq
@@ -70,7 +70,7 @@
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }}$' 
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }}" 
         state=present
-  when: hostvars[item].int_ip_addr is defined and hosts_file_grid_group_to_populate is defined
+  when: hostvars[item].int_ip_addr is defined and hosts_file_grid_group_to_populate != ""
   with_items: "{{ hosts_file_grid_group_to_populate }}"
   notify:
     - restart dnsmasq
@@ -82,7 +82,7 @@
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-install {{item}} {{ siteName }}-install.{{ intDomain }}.{{ siteDomain }}$' 
         line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-install {{item}} {{ siteName }}-install.{{ intDomain }}.{{ siteDomain }}" 
         state=present
-  when: hostvars[item].int_ip_addr is defined and hosts_file_install_group_to_populate is defined
+  when: hostvars[item].int_ip_addr is defined and hosts_file_install_group_to_populate != ""
   with_items: "{{ hosts_file_install_group_to_populate }}"
   notify:
     - restart dnsmasq

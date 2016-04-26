@@ -17,6 +17,7 @@ ansible_pull_kickstart: false
 # hosts_file_to_populate we populate with nodes and their IP addresses
 hosts_file_to_populate: "/etc/hosts"
 # These are the ansible groups we populate
+# Set them to "" to disable
 hosts_file_pxe_group_to_populate: "{{ groups.pxe_bootable_nodes }}"
 hosts_file_admin_group_to_populate: "{{ groups.admin }}"
 hosts_file_grid_group_to_populate: "{{ groups.grid }}"
