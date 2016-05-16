@@ -47,3 +47,6 @@ kickstart_packages: |
 
 kickstart_extra_post_commands: |
  "echo no extra kickstart post commands defined"
+
+# Should kickstart set up the serial console
+serial_console_enable: false
