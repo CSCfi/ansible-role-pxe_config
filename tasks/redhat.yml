@@ -38,7 +38,7 @@
   lineinfile: 
         dest='{{ hosts_file_to_populate }}'
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }}$' 
-        line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }}" 
+        line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }} {{ item }}.{{ intDomain }}.{{ siteDomain }}"
         state=present
   when: hostvars[item].int_ip_addr is defined and hosts_file_admin_group_to_populate != ""
   with_items: "{{ hosts_file_admin_group_to_populate }}"
@@ -50,7 +50,7 @@
   lineinfile: 
         dest='{{ hosts_file_to_populate }}'
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }}$' 
-        line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }}" 
+        line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }} {{ item }}.{{ intDomain }}.{{ siteDomain }}"
         state=present
   when: hostvars[item].int_ip_addr is defined and hosts_file_grid_group_to_populate != ""
   with_items: "{{ hosts_file_grid_group_to_populate }}"
@@ -62,7 +62,7 @@
   lineinfile: 
         dest='{{ hosts_file_to_populate }}'
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }}-install {{item}} {{ siteName }}-install.{{ intDomain }}.{{ siteDomain }}$' 
-        line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-install {{item}} {{ siteName }}-install.{{ intDomain }}.{{ siteDomain }}" 
+        line="{{ hostvars[item].int_ip_addr }} {{ siteName }}-install {{item}} {{ siteName }}-install.{{ intDomain }}.{{ siteDomain }} {{ item }}.{{ intDomain }}.{{ siteDomain }}"
         state=present
   when: hostvars[item].int_ip_addr is defined and hosts_file_install_group_to_populate != ""
   with_items: "{{ hosts_file_install_group_to_populate }}"
@@ -74,7 +74,7 @@
   lineinfile: 
         dest='{{ hosts_file_to_populate }}'
         regexp='^{{ hostvars[item].int_ip_addr }} {{ siteName }} {{item}} {{ siteName }}.{{ intDomain }}.{{ siteDomain }}$' 
-        line="{{ hostvars[item].int_ip_addr }} {{ siteName }} {{item}} {{ siteName }}.{{ intDomain }}.{{ siteDomain }}" 
+        line="{{ hostvars[item].int_ip_addr }} {{ siteName }} {{item}} {{ siteName }}.{{ intDomain }}.{{ siteDomain }} {{ item }}.{{ intDomain }}.{{ siteDomain }}"
         state=present
   when: hostvars[item].int_ip_addr is defined and hosts_file_login_group_to_populate != ""
   with_items: "{{ hosts_file_login_group_to_populate }}"
