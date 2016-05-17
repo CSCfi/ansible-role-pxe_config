@@ -28,26 +28,8 @@
   template: src=pxe_node.conf dest="/var/www/provision/nodes/{{ hostvars[item].pxe_name }}.conf"
   with_items: "{{ groups.pxe_bootable_nodes }}"
 
-- name: populate hosts file with PXE hosts
-  lineinfile: 
-        dest='{{ hosts_file_to_populate }}'
-        regexp='^{{ hostvars[item].int_ip_addr }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}$' 
-        line="{{ hostvars[item].int_ip_addr }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}" 
-        state=present
-  when: hostvars[item].int_ip_addr is defined
-  with_items: "{{ groups.pxe_bootable_nodes }}"
-  notify:
-    - restart dnsmasq
-  tags: dns_update
-
-- name: populate hosts file with PXE hosts-ib IP addresses
-  lineinfile: 
-        dest='{{ hosts_file_to_populate }}'
-        regexp='^{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{ hostvars[item].pxe_name }}-ib.{{ intDomain }}.{{ siteDomain }}$' 
-        line="{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{ hostvars[item].pxe_name }}-ib.{{ intDomain }}.{{ siteDomain }}" 
-        state=present
-  when: hostvars[item].ib_ip_addr is defined and hosts_file_pxe_group_to_populate != ""
-  with_items: "{{ hosts_file_pxe_group_to_populate }}"
+- name: populate hosts file from template with PXE hosts
+  template: src='hosts.j2' dest='{{ hosts_file_to_populate }}' owner=root group=root mode='0644'
   notify:
     - restart dnsmasq
   tags: dns_update

@@ -1,0 +1,10 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+{% for item in hosts_file_pxe_group_to_populate %}
+{{ hostvars[item].int_ip_addr }} {{ hostvars[item].pxe_name }} {{ hostvars[item].pxe_name }}.{{ intDomain }}.{{ siteDomain }}
+{% if hostvars[item].ib_ip_addr is defined %}
+{{ hostvars[item].ib_ip_addr }} {{ hostvars[item].pxe_name }}-ib {{ hostvars[item].pxe_name }}-ib.{{ intDomain }}.{{ siteDomain }}
+{% endif %}
+{% endfor %}
+
