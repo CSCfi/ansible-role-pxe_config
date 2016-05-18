@@ -24,6 +24,9 @@
 - name: create_pxe_directory_structure
   file: path=/var/www/provision/nodes state=directory owner=apache group=apache mode="0755"
 
+- name: create pxe boot data json file
+  template: src='pxe_nodes.json.j2' dest='/var/www/provision/nodes/pxe_nodes.json'
+
 - name: populate hosts file from template with PXE hosts
   template: src='hosts.j2' dest='{{ hosts_file_to_populate }}' owner=root group=root mode='0644'
   notify:
