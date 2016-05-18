@@ -1,0 +1,10 @@
+{
+{% for item in hosts_file_pxe_group_to_populate %}
+  "{{ item }}": {
+    "kickstart_profile": "{{ hostvars[item]['kickstart_profile'] }}",
+    "kickstart_server_ip": "{{ hostvars[item]['kickstart_server_ip'] }}"
+  }{% if not loop.last %},
+{% endif %}
+{% endfor %}
+
+}
