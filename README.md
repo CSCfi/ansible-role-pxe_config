@@ -77,12 +77,11 @@ The tests we run are in here: https://github.com/CSC-IT-Center-for-Science/ansib
 They generate a hosts file that looks like this:
 
 <pre>
-10.1.1.4 io io.int.fgci.csc.fi
 10.1.100.1 io1 io1.int.fgci.csc.fi
 10.2.100.1 io1-ib io1-ib.int.fgci.csc.fi
-10.1.1.6 io-admin io-admin.int.fgci.csc.fi
-10.1.100.1 io-grid io-grid.int.fgci.csc.fi
-10.1.100.1 io-install io-install.int.fgci.csc.fi
+10.1.1.6 io-admin io-admin io-admin.int.fgci.csc.fi io-admin.int.fgci.csc.fi
+10.1.1.7 io-grid io-grid io-grid.int.fgci.csc.fi io-grid.int.fgci.csc.fi
+10.1.1.8 io-install io-install io-install.int.fgci.csc.fi io-install.int.fgci.csc.fi
 </pre>
 
 

@@ -11,10 +11,10 @@ io-admin int_ip_addr=10.1.1.6 mac_address=00:11:22:33:44:58 ib_ip_addr=10.2.100.
 io-nfs int_ip_addr=10.1.1.5 mac_address=00:11:22:33:44:57 ib_ip_addr=10.2.100.22
 
 [grid]
-localhost
+io-grid int_ip_addr=10.1.1.7
 
 [install]
-localhost
+io-install int_ip_addr=10.1.1.8
 
 [compute]
 io1 int_ip_addr=10.1.100.1 mac_address=00:11:22:33:44:55 ib_ip_addr=10.2.100.1 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
