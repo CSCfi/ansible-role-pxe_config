@@ -2,22 +2,22 @@
 localhost
 
 [login]
-localhost4 ext_ip_addr=192.168.1.1 int_ip_addr=10.1.1.4 mac_address=00:11:22:33:44:56 pxe_name=io ib_ip_addr=10.2.100.44
+io ext_ip_addr=192.168.1.1 int_ip_addr=10.1.1.4 mac_address=00:11:22:33:44:56 ib_ip_addr=10.2.100.44
 
 [admin]
-admin-node int_ip_addr=10.1.1.6 mac_address=00:11:22:33:44:58 pxe_name=io-admin ib_ip_addr=10.2.100.33
+io-admin int_ip_addr=10.1.1.6 mac_address=00:11:22:33:44:58 ib_ip_addr=10.2.100.33
 
 [nfs]
-localhost6 int_ip_addr=10.1.1.5 mac_address=00:11:22:33:44:57 pxe_name=io-nfs ib_ip_addr=10.2.100.22
+io-nfs int_ip_addr=10.1.1.5 mac_address=00:11:22:33:44:57 ib_ip_addr=10.2.100.22
 
 [grid]
-localhost
+io-grid int_ip_addr=10.1.1.7
 
 [install]
-localhost
+io-install int_ip_addr=10.1.1.8
 
 [compute]
-localhost int_ip_addr=10.1.100.1 mac_address=00:11:22:33:44:55 pxe_name=io1 ib_ip_addr=10.2.100.1 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+io1 int_ip_addr=10.1.100.1 mac_address=00:11:22:33:44:55 ib_ip_addr=10.2.100.1 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
 
 [pxe_bootable_nodes:children]
 compute

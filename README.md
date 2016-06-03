@@ -7,13 +7,13 @@ Configures PXE
 Requirements
 ------------
 
-a hosts file that looks like this (please note that node1/node2 below are not used to populate the hosts file, only the pxe_name and int_ip_addr and ib_ip_addr):
+a hosts file that looks like this:
 
 <pre>
 
 [compute]
-node1 int_ip_addr=10.1.2.1 ib_ip_addr=10.2.2.1 mac_address=00:11:22:33:44:55 pxe=yes pxe_name=io1
-node2 int_ip_addr=10.1.2.2 ib_ip_addr=10.2.2.2 mac_address=00:11:22:33:44:56 pxe=yes pxe_name=io2
+node1 int_ip_addr=10.1.2.1 ib_ip_addr=10.2.2.1 mac_address=00:11:22:33:44:55
+node2 int_ip_addr=10.1.2.2 ib_ip_addr=10.2.2.2 mac_address=00:11:22:33:44:56
 
 [pxe_bootable_nodes:children]
 compute
@@ -79,9 +79,9 @@ They generate a hosts file that looks like this:
 <pre>
 10.1.100.1 io1 io1.int.fgci.csc.fi
 10.2.100.1 io1-ib io1-ib.int.fgci.csc.fi
-10.1.1.6 io-admin admin-node io-admin.int.fgci.csc.fi
-10.1.100.1 io-grid localhost io-grid.int.fgci.csc.fi
-10.1.100.1 io-install localhost io-install.int.fgci.csc.fi
+10.1.1.6 io-admin io-admin io-admin.int.fgci.csc.fi io-admin.int.fgci.csc.fi
+10.1.1.7 io-grid io-grid io-grid.int.fgci.csc.fi io-grid.int.fgci.csc.fi
+10.1.1.8 io-install io-install io-install.int.fgci.csc.fi io-install.int.fgci.csc.fi
 </pre>
 
 
