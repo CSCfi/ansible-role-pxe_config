@@ -121,6 +121,14 @@ function extra_tests(){
 
     echo "TEST: cat the resulting /tmp/hosts (/tmp/hosts because we write to that file in the test)"
     cat /tmp/hosts
+    echo "TEST: cat the resulting /etc/dhcp/dhcp.d/nodes.conf"
+    cat /etc/dhcp/dhcpd.d/nodes.conf
+    echo "TEST: cat the resulting pxe_nodes.json"
+    ls -l /var/www/provision/nodes/*
+    cat /var/www/provision/nodes/io1.conf
+    echo "TEST: cat the resulting kickstartfile - FGCI-compute-node"
+    cat /tmp/FGCI-compute-node
+
 }
 
 
