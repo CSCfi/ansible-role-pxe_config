@@ -125,7 +125,7 @@ function extra_tests(){
     cat /etc/dhcp/dhcpd.d/nodes.conf
     echo "TEST: cat the resulting pxe_nodes.json"
     ls -l /var/www/provision/nodes/*
-    cat /var/www/provision/nodes/io1.conf
+    cat /var/www/provision/nodes/pxe_nodes.json
     echo "TEST: cat the resulting kickstartfile - FGCI-compute-node"
     cat /tmp/FGCI-compute-node
 
