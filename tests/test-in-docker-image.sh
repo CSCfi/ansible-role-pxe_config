@@ -126,8 +126,12 @@ function extra_tests(){
     echo "TEST: cat the resulting pxe_nodes.json"
     ls -l /var/www/provision/nodes/*
     cat /var/www/provision/nodes/pxe_nodes.json
+    echo "TEST: ls kickstartfiles"
+    ls -l /tmp/FGCI-*
     echo "TEST: cat the resulting kickstartfile - FGCI-compute-node"
     cat /tmp/FGCI-compute-node
+    echo "TEST: cat the resulting kickstartfile - FGCI-nfs-node"
+    cat /tmp/FGCI-nfs-node
 
 }
 
