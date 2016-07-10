@@ -36,22 +36,22 @@
 ##
 # Use a custom script to parse the inventory file because there's no easy way to list the groups in a group of groups using ansible built-in variables.
 
-- name: grab a list of the groups
-  command: python files/custom-inventory.py --list --json --inventory {{ hosts_file_inventory_location }}
+- name: grab a list of hosts (one per child group in pxe_bootable_nodes) using custom-inventory.py
+  command: python files/custom-inventory.py --single --json --group pxe_bootable_nodes
   register: reg_inventory
   changed_when: False
   delegate_to: localhost
 
-- name: store list of groups in a fact as json
-  set_fact: my_inventory="{{ reg_inventory['stdout']|from_json }}"
+- name: store the list of hosts as json in a variable called hosts_file_my_inventory
+  set_fact: hosts_file_my_inventory="{{ reg_inventory['stdout']|from_json }}"
 
-- name: store the list of groups in a group in a fact
-  set_fact: my_group="{{ my_inventory['pxe_bootable_nodes']}}"
+- name: set the list of hosts as a fact called hosts_file_my_group - from key pxe_bootable_nodes in hosts_file_my_inventory
+  set_fact: hosts_file_my_group="{{ hosts_file_my_inventory['pxe_bootable_nodes']}}"
 
-- name: print each group in the group
+- name: print each host
   debug: var=item
-  with_items: "{{ my_group }}"
+  with_items: "{{ hosts_file_my_group }}"
 
 - name: copy over kickstart file
   template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
-  with_items: "{{ groups.pxe_bootable_nodes }}"
+  with_items: "{{ hosts_file_my_group }}"
