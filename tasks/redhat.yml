@@ -36,8 +36,8 @@
 ##
 # Use a custom script to parse the inventory file because there's no easy way to list the groups in a group of groups using ansible built-in variables.
 
-- name: grab a list of hosts (one per child group in pxe_bootable_nodes) using custom-inventory.py
-  command: python files/custom-inventory.py --single --json --group pxe_bootable_nodes --inventory {{ hosts_file_inventory_location }}
+- name: grab a list of hosts (one per child group in {{ hosts_file_group_to_populate }}) using custom-inventory.py
+  command: python files/custom-inventory.py --single --json --group {{ hosts_file_group_to_populate }} --inventory {{ hosts_file_inventory_location }}
   register: reg_inventory
   changed_when: False
   delegate_to: localhost
@@ -46,8 +46,8 @@
 - name: store the list of hosts as json in a variable called hosts_file_my_inventory
   set_fact: hosts_file_my_inventory="{{ reg_inventory['stdout']|from_json }}"
 
-- name: set the list of hosts as a fact called hosts_file_my_group - from key pxe_bootable_nodes in hosts_file_my_inventory
-  set_fact: hosts_file_my_group="{{ hosts_file_my_inventory['pxe_bootable_nodes']}}"
+- name: set the list of hosts as a fact called hosts_file_my_group - from key {{ hosts_file_group_to_populate }} in hosts_file_my_inventory
+  set_fact: hosts_file_my_group="{{ hosts_file_my_inventory['{{ hosts_file_group_to_populate }}']}}"
 
 - name: print each host
   debug: var=item

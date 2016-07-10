@@ -25,6 +25,7 @@ hosts_file_install_group_to_populate: "{{ groups.install }}"
 hosts_file_login_group_to_populate: "{{ groups.login }}"
 
 #hosts_file_inventory_location points to where the ansible inventory file is
+hosts_file_group_to_populate: "pxe_bootable_nodes"
 hosts_file_inventory_location: "hosts"
 
 dhcp_common_domain: "fgci.csc.fi"
