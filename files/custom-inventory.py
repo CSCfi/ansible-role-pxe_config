@@ -11,9 +11,14 @@ from ansible.parsing.dataloader import DataLoader
 from ansible.vars import VariableManager
 # for producing json
 import json
+# checking if inventory_file exists
+import os.path
+# for exiting with non-zero rc
+import sys
 
 ###args
 parser = argparse.ArgumentParser(description='Different inventory script')
+parser.add_argument('--inventory', dest='inventory_file', action='store', default='hosts')
 parser.add_argument('--list', dest='list', action='store_true')
 parser.add_argument('--host', dest='host', action='store')
 parser.add_argument('--group', dest='group', action='store')
@@ -21,6 +26,7 @@ parser.add_argument('--json', dest='json', action='store_true')
 
 args = parser.parse_args()
 
+inventory_file = args.inventory_file
 host = args.host
 llist = args.list
 chosen_group = args.group
@@ -35,7 +41,11 @@ def hostfunction(host):
 def listfunction(llist):
   variable_manager = VariableManager()
   loader = DataLoader()
-  inventory = Inventory(loader=loader, variable_manager=variable_manager,  host_list='hosts')
+  if not os.path.isfile(inventory_file):
+    print "%s is not a file - halting" % inventory_file
+    sys.exit(1)
+  else:
+    inventory = Inventory(loader=loader, variable_manager=variable_manager,  host_list=inventory_file)
 
   groups = inventory.groups
   for group in groups:

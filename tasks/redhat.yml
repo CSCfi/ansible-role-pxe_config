@@ -37,8 +37,9 @@
 # Use a custom script to parse the inventory file because there's no easy way to list the groups in a group of groups using ansible built-in variables.
 
 - name: grab a list of the groups
-  command: python files/custom-inventory.py --list --json
+  command: python files/custom-inventory.py --list --json --inventory {{ hosts_file_inventory_location }}
   register: reg_inventory
+  changed_when: False
   delegate_to: localhost
 
 - name: store list of groups in a fact as json
