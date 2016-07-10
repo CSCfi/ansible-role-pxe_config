@@ -33,6 +33,24 @@
     - restart dnsmasq
   tags: dns_update
 
+##
+# Use a custom script to parse the inventory file because there's no easy way to list the groups in a group of groups using ansible built-in variables.
+
+- name: grab a list of the groups
+  command: python files/custom-inventory.py --list --json
+  register: reg_inventory
+  delegate_to: localhost
+
+- name: store list of groups in a fact as json
+  set_fact: my_inventory="{{ reg_inventory['stdout']|from_json }}"
+
+- name: store the list of groups in a group in a fact
+  set_fact: my_group="{{ my_inventory['pxe_bootable_nodes']}}"
+
+- name: print each group in the group
+  debug: var=item
+  with_items: "{{ my_group }}"
+
 - name: copy over kickstart file
   template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
   with_items: "{{ groups.pxe_bootable_nodes }}"
