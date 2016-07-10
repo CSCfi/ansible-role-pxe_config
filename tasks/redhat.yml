@@ -41,6 +41,7 @@
   register: reg_inventory
   changed_when: False
   delegate_to: localhost
+  always_run: True
 
 - name: store the list of hosts as json in a variable called hosts_file_my_inventory
   set_fact: hosts_file_my_inventory="{{ reg_inventory['stdout']|from_json }}"
