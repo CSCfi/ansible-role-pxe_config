@@ -37,7 +37,7 @@
 # Use a custom script to parse the inventory file because there's no easy way to list the groups in a group of groups using ansible built-in variables.
 
 - name: grab a list of hosts (one per child group in pxe_bootable_nodes) using custom-inventory.py
-  command: python files/custom-inventory.py --single --json --group pxe_bootable_nodes
+  command: python files/custom-inventory.py --single --json --group pxe_bootable_nodes --hosts {{ hosts_file_inventory_location }}
   register: reg_inventory
   changed_when: False
   delegate_to: localhost
