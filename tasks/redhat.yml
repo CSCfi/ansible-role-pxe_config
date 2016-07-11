@@ -47,7 +47,7 @@
   set_fact: hosts_file_my_inventory="{{ reg_inventory['stdout']|from_json }}"
 
 - name: set the list of hosts as a fact called hosts_file_my_group - from key {{ hosts_file_group_to_populate }} in hosts_file_my_inventory
-  set_fact: hosts_file_my_group="{{ hosts_file_my_inventory[{{ hosts_file_group_to_populate }}]}}"
+  set_fact: hosts_file_my_group="{{ hosts_file_my_inventory[hosts_file_group_to_populate]}}"
 
 - name: print each host
   debug: var=item
