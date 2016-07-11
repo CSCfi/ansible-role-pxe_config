@@ -42,17 +42,27 @@
   changed_when: False
   delegate_to: localhost
   always_run: True
+  when: hosts_file_use_custom_inventory
 
 - name: store the list of hosts as json in a variable called hosts_file_my_inventory
   set_fact: hosts_file_my_inventory="{{ reg_inventory['stdout']|from_json }}"
+  when: hosts_file_use_custom_inventory
 
 - name: set the list of hosts as a fact called hosts_file_my_group - from key {{ hosts_file_group_to_populate }} in hosts_file_my_inventory
   set_fact: hosts_file_my_group="{{ hosts_file_my_inventory[hosts_file_group_to_populate]}}"
+  when: hosts_file_use_custom_inventory
 
 - name: print each host
   debug: var=item
   with_items: "{{ hosts_file_my_group }}"
+  when: hosts_file_use_custom_inventory
 
-- name: copy over kickstart file
+- name: copy over kickstart file (new and faster style)
   template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
   with_items: "{{ hosts_file_my_group }}"
+  when: hosts_file_use_custom_inventory
+
+- name: copy over kickstart file (old style)
+  template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
+  with_items: "{{ groups.pxe_bootable_nodes }}"
+  when: hosts_file_use_custom_inventory == False
