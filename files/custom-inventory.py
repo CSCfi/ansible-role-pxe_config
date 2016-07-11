@@ -3,19 +3,17 @@
 # and print the groups of a group
 # Extremely poor looking python to json string replacement
 # at the bottom.  Feel free to improve :)
-## http://docs.ansible.com/ansible/developing_api.html
+## https://github.com/CSC-IT-Center-for-Science/ansible-role-pxe_config
+## Ansible API documentation: http://docs.ansible.com/ansible/developing_api.html
 
-# Single:
-## Return a list of one host in each child group
-
-
+### Libraries used
 import argparse
 # for parsing the existing inventory
 from ansible.inventory import Inventory
 from ansible.parsing.dataloader import DataLoader
 from ansible.vars import VariableManager
-# for producing json
-import json
+# this could be used for producing json
+#import json
 # checking if inventory_file exists
 import os.path
 # for exiting with non-zero rc
@@ -24,16 +22,14 @@ import sys
 ###args
 parser = argparse.ArgumentParser(description='Different inventory script')
 parser.add_argument('--inventory', dest='inventory_file', action='store', default='hosts')
-parser.add_argument('--list', dest='list', action='store_true')
-parser.add_argument('--host', dest='host', action='store')
-parser.add_argument('--group', dest='group', action='store')
-parser.add_argument('--json', dest='json', action='store_true')
-parser.add_argument('--single', dest='single', action='store_true')
+parser.add_argument('--list', dest='list', action='store_true', help='boolean to list all hosts')
+parser.add_argument('--group', dest='group', action='store', help='Specify a group to')
+parser.add_argument('--json', dest='json', action='store_true', help='Output in JSON')
+parser.add_argument('--single', dest='single', action='store_true', help='Use with --group, output one host per child group of group')
 
 args = parser.parse_args()
 
 inventory_file = args.inventory_file
-host = args.host
 llist = args.list
 chosen_group = args.group
 want_json = args.json
@@ -44,15 +40,13 @@ dict_single_hosts = {}
 dict_groups = {}
 dict_groups2 = {}
 
-def hostfunction(host):
-  print host
-  print "Host"
+###
 
 def listfunction(llist):
   variable_manager = VariableManager()
   loader = DataLoader()
   if not os.path.isfile(inventory_file):
-    print "%s is not a file - halting" % inventory_file
+    print "%s is not a file - halting. Consider using the '--inventory $path/to/ansible_inventory file' parameter" % inventory_file
     sys.exit(1)
   else:
     inventory = Inventory(loader=loader, variable_manager=variable_manager,  host_list=inventory_file)
@@ -62,13 +56,14 @@ def listfunction(llist):
       dogroup = inventory.get_group(group)
       if dogroup.child_groups:
         list_of_hosts = dogroup.child_groups
+	# we need to quote the items in the list because JSON
         list_of_hosts2 = ','.join("'{0}'".format(x) for x in list_of_hosts)
         list_of_hosts3 = list_of_hosts2.replace('["', '[')
         list_of_hosts4 = list_of_hosts3.replace('"]', ']')
         # the three lists
-        dict_groups2[group] = list_of_hosts # used with single
-        dict_groups[group] = [ list_of_hosts4 ] # used with list and group
-        dict_hosts[group] = inventory.list_hosts(group) # used with single
+        dict_groups2[group] = list_of_hosts # used with --single
+        dict_groups[group] = [ list_of_hosts4 ] # used with --list and --group
+        dict_hosts[group] = inventory.list_hosts(group) # used with --single
 
 # make a dict that only has one host per child group
   if chosen_group:
@@ -82,16 +77,16 @@ def listfunction(llist):
           if len(dict_single_hosts[chosen_group]) == 0:
             dict_single_hosts[group] = [ host ]
 
-# here we populate dict_single_hosts so that the chosen_group entry only has a list of 3 hosts that are in three separate child groups
+# here we populate dict_single_hosts so that the chosen_group key only has a list of hosts that are in separate child groups
   for group in dict_single_hosts:
     if chosen_group == group:
       continue
     if len(dict_single_hosts[chosen_group]) < ( len(dict_single_hosts) - 1 ):
+      # -1 because the chosen_group is also in the same dict
       for host in dict_single_hosts[group]:
         dict_single_hosts[chosen_group].append(host)
 
-# here we quote them 
-
+# here we quote the entries in dict_of_single_hosts (because JSON)
   if single:
     list_of_single_hosts = dict_single_hosts[chosen_group]
     list_of_single_hosts2 = ','.join("'{0}'".format(x) for x in list_of_single_hosts)
@@ -99,8 +94,7 @@ def listfunction(llist):
     dict_single_hosts[chosen_group] = [ list_of_single_hosts2 ]
 ##########
 
-#######
-
+# Some arguments checking - this could probably be done with argparse settings
   if chosen_group:
     if single:
       return(dict_single_hosts[chosen_group])
@@ -110,9 +104,9 @@ def listfunction(llist):
     return(dict_groups)
 
 #########
-if args.host:
-    print hostfunction(args.host)
-elif args.list:
+
+# Some more string replacements to produce JSON
+if args.list:
     if want_json:
       hostlist = str(listfunction(args.list))
       hostlist2 = hostlist.replace('["', '[')
