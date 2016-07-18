@@ -37,7 +37,7 @@
 # Use a custom script to parse the inventory file because there's no easy way to list the groups in a group of groups using ansible built-in variables.
 
 - name: grab a list of hosts (one per child group in {{ hosts_file_group_to_populate }}) using custom-inventory.py
-  command: python files/custom-inventory.py --single --json --group {{ hosts_file_group_to_populate }} --inventory {{ hosts_file_inventory_location }}
+  command: python {{ role_path }}/files/custom-inventory.py --single --json --group {{ hosts_file_group_to_populate }} --inventory {{ hosts_file_inventory_location }}
   register: reg_inventory
   changed_when: False
   delegate_to: localhost
