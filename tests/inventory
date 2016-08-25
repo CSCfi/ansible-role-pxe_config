@@ -41,3 +41,7 @@ install
 
 [slurm_compute:children]
 compute
+
+[switches]
+sw1 int_ip_addr=10.44.55.1 ib_ip_addr=10.55.66.1
+sw2 int_ip_addr=10.44.55.2 ib_ip_addr=10.55.66.2
