@@ -34,6 +34,7 @@ hosts_file_admin_group_to_populate: "{{ groups.admin }}"
 hosts_file_grid_group_to_populate: "{{ groups.grid }}"
 hosts_file_install_group_to_populate: "{{ groups.install }}"
 hosts_file_login_group_to_populate: "{{ groups.login }}"
+hosts_file_extra_group_to_populate: ""
 </pre>
 
 By setting the above to "" we disable that group. So let's say you only want to populate the production group, set the variables like so:
@@ -44,6 +45,7 @@ hosts_file_admin_group_to_populate: ""
 hosts_file_grid_group_to_populate: ""
 hosts_file_install_group_to_populate: ""
 hosts_file_login_group_to_populate: ""
+hosts_file_extra_group_to_populate: ""
 </pre>
 
 Using a custom inventory script to only write kickstart templates once per child group of a group by:

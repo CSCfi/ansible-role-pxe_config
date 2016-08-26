@@ -26,3 +26,10 @@
 {{ hostvars[item].ib_ip_addr }} {{ item }}-ib {{ item }}-ib.{{ intDomain }}.{{ siteDomain }}
 {% endif %}
 {% endfor %}
+
+{% for item in hosts_file_extra_group_to_populate %}
+{{ hostvars[item].int_ip_addr }} {{ item }} {{ item }}.{{ intDomain }}.{{ siteDomain }}
+{% if hostvars[item].ib_ip_addr is defined %}
+{{ hostvars[item].ib_ip_addr }} {{ item }}-ib {{ item }}-ib.{{ intDomain }}.{{ siteDomain }}
+{% endif %}
+{% endfor %}
