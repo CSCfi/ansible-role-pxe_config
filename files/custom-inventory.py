@@ -54,8 +54,10 @@ dict_single_hosts = {}
 dict_groups = {}
 dict_groups2 = {}
 
-# dict_single_hosts is used to store single hosts from multiple child groups
+# dict_single_hosts is used to store single hosts from nested child groups
 dict_single_hosts[chosen_group] = []
+# child_child_groups is used to store groups under the chosen_group that have children themselves
+child_child_groups = []
 
 ###
 
@@ -87,7 +89,6 @@ def listfunction(llist):
 ## Nested child groups
 # To make this work with optionally nested groups (example up top) we need to after the group is populated, look in dict_groups if there are any double-nested groups.
     if chosen_group and single:
-        child_child_groups = []
         for group in dict_groups2[chosen_group]:
             try:
                 dict_groups2[str(group)]
