@@ -60,13 +60,15 @@ dict_single_hosts[chosen_group] = []
 ###
 
 def listfunction(llist):
+    """This function does all the work and lists groups or hosts"""
+    llist = llist
     variable_manager = VariableManager()
     loader = DataLoader()
     if not os.path.isfile(inventory_file):
         print "%s is not a file - halting. Consider using the '--inventory $path/to/ansible_inventory file' parameter" % inventory_file
         sys.exit(1)
     else:
-        inventory = Inventory(loader=loader, variable_manager=variable_manager,  host_list=inventory_file)
+        inventory = Inventory(loader=loader, variable_manager=variable_manager, host_list=inventory_file)
 
     groups = inventory.groups
     for group in groups:
@@ -78,8 +80,8 @@ def listfunction(llist):
             list_of_hosts3 = list_of_hosts2.replace('["', '[')
             list_of_hosts4 = list_of_hosts3.replace('"]', ']')
             # the three lists
-            dict_groups2[group] = list_of_hosts # used with --single 
-            dict_groups[group] = [ list_of_hosts4 ] # used with --list and --group
+            dict_groups2[group] = list_of_hosts # used with --single
+            dict_groups[group] = [list_of_hosts4] # used with --list and --group
             dict_hosts[group] = inventory.list_hosts(group) # used with --single
 
 ## Nested child groups
@@ -100,7 +102,7 @@ def listfunction(llist):
         for child in child_child_groups:
             for child_child in dict_groups2[child]:
                 child_host = inventory.get_hosts(str(child_child))[-1]
-                dict_single_hosts[child_child] = [ child_host ]
+                dict_single_hosts[child_child] = [child_host]
 
 ##   End of this child of mine
 
@@ -114,13 +116,13 @@ def listfunction(llist):
                 if group in dict_groups2[chosen_group]:
                 #this host is in one of the child groups of the chosen_group
                     if len(dict_single_hosts[chosen_group]) == 0:
-                        dict_single_hosts[group] = [ host ]
+                        dict_single_hosts[group] = [host]
 
 #   here we populate dict_single_hosts so that the chosen_group key only has a list of hosts that are in separate child groups
     for group in dict_single_hosts:
         if chosen_group == group:
             continue
-        if len(dict_single_hosts[chosen_group]) < ( len(dict_single_hosts) - 1 ):
+        if len(dict_single_hosts[chosen_group]) < (len(dict_single_hosts) - 1):
             # -1 because the chosen_group is also in the same dict
             for host in dict_single_hosts[group]:
               # and we first check if it's already in there, that might have been added by the child_child hosts
@@ -132,47 +134,47 @@ def listfunction(llist):
         list_of_single_hosts = dict_single_hosts[chosen_group]
         list_of_single_hosts2 = ','.join("'{0}'".format(x) for x in list_of_single_hosts)
         dict_single_hosts[chosen_group] = []
-        dict_single_hosts[chosen_group] = [ list_of_single_hosts2 ]
+        dict_single_hosts[chosen_group] = [list_of_single_hosts2]
 ##  ########
 
 #   Some arguments checking - this could probably be done with argparse settings
     if chosen_group:
         if single:
-            return(dict_single_hosts[chosen_group])
+            return dict_single_hosts[chosen_group]
         else:
-            return(dict_groups[chosen_group])
+            return dict_groups[chosen_group]
     else:
-        return(dict_groups)
+        return dict_groups
 
 #########
 
 # Some more string replacements to produce JSON
 if args.list:
     if want_json:
-        hostlist = str(listfunction(args.list))
-        hostlist2 = hostlist.replace('["', '[')
-        hostlist3 = hostlist2.replace('"]', ']')
-        hostlist4 = hostlist3.replace('^"', '')
-        hostlist5 = hostlist4.replace('"$', '')
-        hostlist6 = hostlist5.replace("u'", "'")
-        hostlist7 = hostlist6.replace("'", '"')
-        print hostlist7
+        HOSTLIST = str(listfunction(args.list))
+        HOSTLISTA = HOSTLIST.replace('["', '[')
+        HOSTLISTB = HOSTLISTA.replace('"]', ']')
+        HOSTLISTC = HOSTLISTB.replace('^"', '')
+        HOSTLISTD = HOSTLISTC.replace('"$', '')
+        HOSTLISTE = HOSTLISTD.replace("u'", "'")
+        HOSTLISTF = HOSTLISTE.replace("'", '"')
+        print HOSTLISTF
         #print json.dumps(hostlist5)
     else:
         print listfunction(args.list)
 elif args.group:
     if want_json:
-        hostlist = str(listfunction(args.group))
-        hostlist2 = hostlist.replace('["', '[')
-        hostlist3 = hostlist2.replace('"]', ']')
-        hostlist4 = hostlist3.replace('^"', '')
-        hostlist5 = hostlist4.replace('"$', '')
+        HOSTLIST = str(listfunction(args.group))
+        HOSTLISTA = HOSTLIST.replace('["', '[')
+        HOSTLISTB = HOSTLISTA.replace('"]', ']')
+        HOSTLISTC = HOSTLISTB.replace('^"', '')
+        HOSTLISTD = HOSTLISTC.replace('"$', '')
         if not single:
-            hostlist6 = hostlist5.replace("u'", "'")
+            HOSTLISTE = HOSTLISTD.replace("u'", "'")
         else:
-            hostlist6 = hostlist5
-        hostlist7 = hostlist6.replace("'", '"')
-        print '{ "%s" : %s }' % (args.group,hostlist7)
+            HOSTLISTE = HOSTLISTD
+        HOSTLISTF = HOSTLISTD.replace("'", '"')
+        print '{ "%s" : %s }' % (args.group, HOSTLISTF)
         #print json.dumps(hostlist5)
         #print json.dumps(listfunction(args.group))
     else:
