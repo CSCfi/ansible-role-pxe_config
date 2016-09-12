@@ -108,18 +108,23 @@ function test_playbook_check(){
     echo "TEST: ansible-playbook -i ${ANSIBLE_INVENTORY} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} --check"
 
     ansible-playbook -i ${ANSIBLE_INVENTORY} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} --check ||(echo "playbook check failed" && exit 2 )
+    # use a second inventory 
     echo "TEST2: ansible-playbook -i ${ANSIBLE_INVENTORY_2} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} --check -e hosts_file_inventory_location=/ansible-role-pxe_config/${ANSIBLE_INVENTORY_2}"
 
-    ansible-playbook -i ${ANSIBLE_INVENTORY_2} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} --check ||(echo "playbook check failed" && exit 2 )
+    ansible-playbook -i ${ANSIBLE_INVENTORY_2} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} --check -e hosts_file_inventory_location=/ansible-role-pxe_config/${ANSIBLE_INVENTORY_2}||(echo "playbook check failed" && exit 2 )
 
 
 }
 
 function test_playbook(){
     echo "TEST: ansible-playbook -i ${ANSIBLE_INVENTORY} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS}"
+
     ansible-playbook -i ${ANSIBLE_INVENTORY} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} ||(echo "first ansible run failed" && exit 2 )
 
+
+    # use a second inventory 
     echo "TEST2: ansible-playbook -i ${ANSIBLE_INVENTORY_2} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS}"
+
     ansible-playbook -i ${ANSIBLE_INVENTORY_2} ${ANSIBLE_PLAYBOOk} ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} -e hosts_file_inventory_location=/ansible-role-pxe_config/${ANSIBLE_INVENTORY_2} ||(echo "first ansible run failed" && exit 2 )
 
 #    echo "TEST: idempotence test! Same as previous but now grep for changed=0.*failed=0"
