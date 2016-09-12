@@ -18,6 +18,10 @@ io-grid int_ip_addr=10.1.1.7
 [install]
 io-install int_ip_addr=10.1.1.8
 
+[compute:children]
+compute_io
+compute_ok
+
 [compute_io]
 io1 int_ip_addr=10.1.100.1 mac_address=00:11:22:33:44:55 ib_ip_addr=10.2.100.1 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
 io2 int_ip_addr=10.1.100.2 mac_address=00:11:22:33:44:56 ib_ip_addr=10.2.100.2 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
