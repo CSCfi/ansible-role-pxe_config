@@ -1,0 +1,55 @@
+# https://github.com/CSC-IT-Center-for-Science/fgci-ansible/blob/master/examples/hosts-example
+localhost
+
+[login]
+io ext_ip_addr=192.168.1.1 int_ip_addr=10.1.1.4 mac_address=00:11:22:33:44:56 ib_ip_addr=10.2.100.44 kickstart_profile="FGCI-login-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=False
+io-login ext_ip_addr=192.168.1.2 int_ip_addr=10.1.1.14 mac_address=00:11:22:33:44:5A ib_ip_addr=10.2.100.45 kickstart_profile="FGCI-login-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=False
+
+[admin]
+io-admin int_ip_addr=10.1.1.6 mac_address=00:11:22:33:44:58 ib_ip_addr=10.2.100.33
+
+[nfs]
+io-nfs int_ip_addr=10.1.1.5 mac_address=00:11:22:33:44:57 ib_ip_addr=10.2.100.22 kickstart_profile="FGCI-nfs-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=False
+io-nfs2 int_ip_addr=10.1.1.6 mac_address=00:11:22:33:44:59 ib_ip_addr=10.2.100.23 kickstart_profile="FGCI-nfs-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=False
+
+[grid]
+io-grid int_ip_addr=10.1.1.7
+
+[install]
+io-install int_ip_addr=10.1.1.8
+
+[compute_io]
+io1 int_ip_addr=10.1.100.1 mac_address=00:11:22:33:44:55 ib_ip_addr=10.2.100.1 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+io2 int_ip_addr=10.1.100.2 mac_address=00:11:22:33:44:56 ib_ip_addr=10.2.100.2 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+io3 int_ip_addr=10.1.100.3 mac_address=00:11:22:33:44:57 ib_ip_addr=10.2.100.3 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+io4 int_ip_addr=10.1.100.4 mac_address=00:11:22:33:44:58 ib_ip_addr=10.2.100.4 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+io5 int_ip_addr=10.1.100.5 mac_address=00:11:22:33:44:59 ib_ip_addr=10.2.100.5 kickstart_profile="FGCI-compute-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+
+[compute_ok]
+ok1 int_ip_addr=10.10.100.1 mac_address=00:11:22:33:44:55 ib_ip_addr=10.2.100.1 kickstart_profile="FGCI-ok-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+ok2 int_ip_addr=10.10.100.2 mac_address=00:11:22:33:44:56 ib_ip_addr=10.2.100.2 kickstart_profile="FGCI-ok-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+ok3 int_ip_addr=10.10.100.3 mac_address=00:11:22:33:44:57 ib_ip_addr=10.2.100.3 kickstart_profile="FGCI-ok-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+ok4 int_ip_addr=10.10.100.4 mac_address=00:11:22:33:44:58 ib_ip_addr=10.2.100.4 kickstart_profile="FGCI-ok-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+ok5 int_ip_addr=10.10.100.5 mac_address=00:11:22:33:44:59 ib_ip_addr=10.2.100.5 kickstart_profile="FGCI-ok-node" kickstart_server_ip="10.1.1.2" internal_interface="eth0" kickstart_partitions="autopart --type=lvm" kickstart_packages="git" ansible_pull_kickstart=True
+
+
+[pxe_bootable_nodes:children]
+compute
+login
+nfs
+
+[production:children]
+install
+admin
+#login
+grid
+
+[slurm_service:children]
+install
+
+[slurm_compute:children]
+compute
+
+[switches]
+ibsw1 int_ip_addr=10.44.55.1 ib_ip_addr=10.55.66.1
+ethsw20 int_ip_addr=10.44.55.20
