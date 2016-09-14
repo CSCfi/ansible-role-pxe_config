@@ -13,7 +13,6 @@
      - rootpwhash: "SHAFOOO"
      - hosts_file_login_group_to_populate: ""
      - hosts_file_inventory_location: "/ansible-role-pxe_config/tests/inventory"
-     - hosts_file_use_custom_inventory: True
      - hosts_file_extra_group_to_populate: "{{ groups.switches }}"
    pre_tasks:
    - name: touch hosts_file_to_populate
