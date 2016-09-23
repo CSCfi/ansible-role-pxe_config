@@ -103,5 +103,7 @@ MIT
 
 Author Information
 ------------------
+ - https://github.com/A1ve5
+ - https://github.com/martbhell
+ - https://github.com/jabl
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
