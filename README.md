@@ -48,10 +48,9 @@ hosts_file_login_group_to_populate: ""
 hosts_file_extra_group_to_populate: ""
 </pre>
 
-Using a custom inventory script to only write kickstart templates once per child group of a group by:
+Using the custom inventory script to only write kickstart templates once per child group of a group by:
 
 <pre>
-hosts_file_use_custom_inventory: True
 hosts_file_group_to_populate: "pxe_bootable_nodes"
 hosts_file_inventory_location: "hosts"
 </pre>

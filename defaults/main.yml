@@ -26,7 +26,6 @@ hosts_file_login_group_to_populate: "{{ groups.login }}"
 hosts_file_extra_group_to_populate: ""
 
 #hosts_file_inventory_location points to where the ansible inventory file is
-hosts_file_use_custom_inventory: False
 hosts_file_group_to_populate: "pxe_bootable_nodes"
 hosts_file_inventory_location: "hosts"
 
