@@ -15,7 +15,7 @@
 - name: install dnsmasq server
   yum: pkg=dnsmasq state=installed
 
-- name: create_dhcp_configs
+- name: template create_dhcp_configs
   template: src=dhcp_node.conf dest="/etc/dhcp/dhcpd.d/nodes.conf"
   notify:
     - restart dhcpd
@@ -24,10 +24,10 @@
 - name: create_pxe_directory_structure
   file: path=/var/www/provision/nodes state=directory owner=apache group=apache mode="0755"
 
-- name: create pxe boot data json file
+- name: template pxe boot data json file
   template: src='pxe_nodes.json.j2' dest='/var/www/provision/nodes/pxe_nodes.json'
 
-- name: populate hosts file from template with PXE hosts
+- name: template hosts file - populate with PXE hosts
   template: src='hosts.j2' dest='{{ hosts_file_to_populate }}' owner=root group=root mode='0644'
   notify:
     - restart dnsmasq
@@ -54,6 +54,6 @@
   debug: var=item verbosity=1
   with_items: "{{ hosts_file_my_group }}"
 
-- name: copy over kickstart file
+- name: template over kickstart file
   template: src="kickstart.cfg" dest="{{ ksBootSrvDir }}/{{ hostvars[item].kickstart_profile }}" owner=apache group=apache mode=0644
   with_items: "{{ hosts_file_my_group }}"
