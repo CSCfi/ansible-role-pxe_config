@@ -41,7 +41,7 @@
   register: reg_inventory
   changed_when: False
   delegate_to: localhost
-  always_run: True
+  check_mode: no
   become: false
 
 - name: store the list of hosts as json in a variable called hosts_file_my_inventory
