@@ -14,7 +14,7 @@ ANSIBLE_INVENTORY="tests/inventory"
 ANSIBLE_INVENTORY_2="tests/inventory_nested"
 ANSIBLE_PLAYBOOk="tests/test.yml"
 #ANSIBLE_LOG_LEVEL=""
-ANSIBLE_LOG_LEVEL="-vvv"
+ANSIBLE_LOG_LEVEL="-v"
 APACHE_CTL="apache2ctl"
 
 # if there wasn't sudo then ansible couldn't use it
@@ -151,7 +151,7 @@ function extra_tests(){
 
 set -e
 function main(){
-    install_os_deps
+#    install_os_deps
 #    install_ansible_devel
     show_version
 #    tree_list
