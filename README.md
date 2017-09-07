@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-pxe_config.svg)](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-pxe_config)
+[![Build Status](https://travis-ci.org/CSCfi/ansible-role-pxe_config.svg)](https://travis-ci.org/CSCfi/ansible-role-pxe_config)
 ansible-role-pxe\_config
 =========
 
@@ -64,8 +64,8 @@ Dependencies
 
    * currently tightly integrated with dhcp\_server and pxe\_bootstrap
 
-      * https://github.com/CSC-IT-Center-for-Science/ansible-role-pxe\_bootstrapo
-      * https://github.com/CSC-IT-Center-for-Science/ansible-role-dhcp\_server
+      * https://github.com/CSCfi/ansible-role-pxe\_bootstrapo
+      * https://github.com/CSCfi/ansible-role-dhcp\_server
 
 
 
@@ -82,7 +82,7 @@ Including an example of how to use your role (for instance, with variables passe
 Result
 ------
 
-The tests we run are in here: https://github.com/CSC-IT-Center-for-Science/ansible-role-pxe_config/tree/master/tests
+The tests we run are in here: https://github.com/CSCfi/ansible-role-pxe_config/tree/master/tests
 
 They generate a hosts file that looks like this:
 
