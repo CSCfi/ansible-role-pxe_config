@@ -2,7 +2,7 @@
 # This is a script that can take an ansible inventory file
 # and print the groups of a group.
 # It can also print one host per all the groups of a group
-## https://github.com/CSC-IT-Center-for-Science/ansible-role-pxe_config
+## https://github.com/CSCfi/ansible-role-pxe_config
 ## Ansible API documentation:
 # http://docs.ansible.com/ansible/developing_api.html
 
