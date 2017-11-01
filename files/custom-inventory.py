@@ -19,11 +19,18 @@
 ### Libraries used
 import argparse
 # for parsing the existing inventory
-from ansible.inventory import Inventory
 from ansible.parsing.dataloader import DataLoader
-from ansible.vars import VariableManager
+#from ansible.vars import VariableManager
 # this could be used for producing json
 import json
+from collections import namedtuple
+from ansible.parsing.dataloader import DataLoader
+from ansible.vars.manager import VariableManager
+from ansible.inventory.manager import InventoryManager
+from ansible.playbook.play import Play
+from ansible.executor.task_queue_manager import TaskQueueManager
+from ansible.plugins.callback import CallbackBase
+
 # checking if inventory_file exists
 import os.path
 # for exiting with non-zero rc
@@ -53,7 +60,9 @@ def listfunction(llist):
         print "%s is not a file - halting. Consider using the '--inventory $path/to/ansible_inventory file' parameter" % inventory_file
         sys.exit(1)
     else:
-        inventory = Inventory(loader=loader, variable_manager=variable_manager, host_list=inventory_file)
+        inventory = InventoryManager(loader=loader, sources=inventory_file)
+        variable_manager = VariableManager(loader=loader, inventory=inventory)
+
 
     if chosen_group and single:
         def traverse(agroup, hostset):
@@ -76,7 +85,7 @@ def listfunction(llist):
         all_groups = {}
         for g in inventory.groups:
             newhosts = []
-            for h in inventory.get_group(g).get_hosts():
+            for h in inventory.get_hosts(g):
                 newhosts.append(h.name.encode('utf8'))
             all_groups[g] = newhosts
         return all_groups
