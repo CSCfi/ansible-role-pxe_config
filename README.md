@@ -64,7 +64,7 @@ Dependencies
 
    * currently tightly integrated with dhcp\_server and pxe\_bootstrap
 
-      * https://github.com/CSCfi/ansible-role-pxe\_bootstrapo
+      * https://github.com/CSCfi/ansible-role-pxe\_bootstrap
       * https://github.com/CSCfi/ansible-role-dhcp\_server
 
 
@@ -106,4 +106,4 @@ Author Information
  - https://github.com/A1ve5
  - https://github.com/martbhell
  - https://github.com/jabl
-
+ - https://github.com/tiggi
