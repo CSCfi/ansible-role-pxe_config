@@ -31,7 +31,6 @@ These are the defaults:
 <pre>
 hosts_file_pxe_group_to_populate: "{{ groups.pxe_bootable_nodes }}"
 hosts_file_admin_group_to_populate: "{{ groups.admin }}"
-hosts_file_grid_group_to_populate: "{{ groups.grid }}"
 hosts_file_install_group_to_populate: "{{ groups.install }}"
 hosts_file_login_group_to_populate: "{{ groups.login }}"
 hosts_file_extra_group_to_populate: ""
@@ -42,7 +41,6 @@ By setting the above to "" we disable that group. So let's say you only want to 
 <pre>
 hosts_file_pxe_group_to_populate: "{{ groups.production }}"
 hosts_file_admin_group_to_populate: ""
-hosts_file_grid_group_to_populate: ""
 hosts_file_install_group_to_populate: ""
 hosts_file_login_group_to_populate: ""
 hosts_file_extra_group_to_populate: ""
@@ -90,7 +88,6 @@ They generate a hosts file that looks like this:
 10.1.100.1 io1 io1.int.fgci.csc.fi
 10.2.100.1 io1-ib io1-ib.int.fgci.csc.fi
 10.1.1.6 io-admin io-admin io-admin.int.fgci.csc.fi io-admin.int.fgci.csc.fi
-10.1.1.7 io-grid io-grid io-grid.int.fgci.csc.fi io-grid.int.fgci.csc.fi
 10.1.1.8 io-install io-install io-install.int.fgci.csc.fi io-install.int.fgci.csc.fi
 </pre>
 
