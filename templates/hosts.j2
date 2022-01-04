@@ -12,10 +12,6 @@
 {{ hostvars[item].int_ip_addr }} {{ siteName }}-admin {{item}} {{ siteName }}-admin.{{ intDomain }}.{{ siteDomain }} {{ item }}.{{ intDomain }}.{{ siteDomain }}
 {% endfor %}
 
-{% for item in hosts_file_grid_group_to_populate %}
-{{ hostvars[item].int_ip_addr }} {{ siteName }}-grid {{item}} {{ siteName }}-grid.{{ intDomain }}.{{ siteDomain }} {{ item }}.{{ intDomain }}.{{ siteDomain }}
-{% endfor %}
-
 {% for item in hosts_file_install_group_to_populate %}
 {{ hostvars[item].int_ip_addr }} {{ siteName }}-install {{item}} {{ siteName }}-install.{{ intDomain }}.{{ siteDomain }} {{ item }}.{{ intDomain }}.{{ siteDomain }}
 {% endfor %}
